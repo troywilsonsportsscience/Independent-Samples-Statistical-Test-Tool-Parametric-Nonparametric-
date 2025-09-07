@@ -24,7 +24,7 @@ This R script provides a fully automated framework for conducting **independent-
 
 ---
 
-## Key Parameters (User-Editable)
+## User-Configuration Settings
 
 - `alpha_level`: significance threshold (default = 0.05)  
 - `tail_type`: `"two.sided"`, `"greater"`, or `"less"`  
@@ -53,7 +53,7 @@ The script includes a helper to **auto-install missing packages**.
 
 ## Usage
 
-### 1. Load Your Data
+### Load Your Data
 ```r
 df <- read_csv("your_file.csv") %>%
   janitor::clean_names()
@@ -62,7 +62,7 @@ test_data <- df %>%
   select(group, score) %>%
   drop_na()
 ```
-Or assign manully for testing/learning
+Or assign manually for testing/learning
 ```r
 test_data <- tibble(
   group = c("A","A","B","B"),
