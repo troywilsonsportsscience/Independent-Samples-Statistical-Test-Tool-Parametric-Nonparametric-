@@ -96,8 +96,10 @@ Just uncomment the dataset you want to run.
 - Nonparametric tests (Mann-Whitney U) do not compute Cohen’s d; effect size must be estimated separately.
 
 ---
+
 ## License
 MIT License. Free for academic, research, and commercial use with attribution.
+
 ---
 ## Contact
 Created and maintained by Troy Wilson. For issues or feature requests, please use the GitHub Issues tab. This project was developed with the assistance of OpenAI's ChatGPT to help structure code, explain statistical logic, and improve documentation clarity.
