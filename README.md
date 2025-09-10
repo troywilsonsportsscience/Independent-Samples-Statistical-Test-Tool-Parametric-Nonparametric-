@@ -1,13 +1,30 @@
 # Independent-Samples Statistical Test Tool (R)
-A single R script that:
-- Checks normality per group (Shapiro–Wilk or Anderson–Darling, optional) and variance equality (Levene/Brown–Forsythe).
-- Chooses classic t, Welch’s t, or Mann–Whitney U automatically.
-- Optionally applies log/sqrt/inv transforms to “rescue” normality.
-- Outputs APA-style text, tidy summary tables, and diagnostic plots.
-- Computes effect sizes:
-    - Parametric: Cohen’s d (pooled), Hedges’ g, Welch’s d, optional Glass’s Δ when heteroscedastic.
-    - Nonparametric: Rank-biserial r, Cliff’s δ (+ optional 95% CI if effsize is available).
-- Invisibly returns a structured list for programmatic use.
+An all-in-one R script for automated independent-samples hypothesis testing with built-in assumption checks, safe transforms, effect sizes, and APA-style reporting.
+
+## Features
+- Assumption checks
+    - Per-group normality (Shapiro–Wilk or Anderson–Darling)
+    - Variance homogeneity via Levene’s test (median-centered)
+- Automatic decision logic
+    - Student’s t (equal variances)
+    - Welch’s t (unequal variances or if Levene unavailable)
+    - Mann–Whitney U (Wilcoxon rank-sum) if normality assumptions cannot be satisfied
+- Safe transformations
+    - Log, square root, inverse, Yeo–Johnson
+    - Applied consistently across both groups using a shared shift/λ
+    - Selects the transform that maximizes the minimum group normality p ≥ α
+- Effect sizes
+    - Parametric: Cohen’s d (pooled SD), Hedges’ g (bias-corrected d), Glass’s Δ (both variants), optional 95% CI for g (via MBESS)
+    - Nonparametric: rank-biserial r (derived from Mann–Whitney Z)
+- Outputs
+    - APA-style text (with assumptions & interpretation)
+    - Group descriptives (M, SD, Median, n)
+    - Tidy tibble with test results & effect sizes
+- Visualization
+    - Histograms + densities by group
+    - Q–Q plots by group
+    - Transform comparison panels (optional)
+
 ---
 ## 1) Install
 ```r
