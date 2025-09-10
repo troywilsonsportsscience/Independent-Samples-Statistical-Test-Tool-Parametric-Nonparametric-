@@ -114,7 +114,39 @@ use_glass_delta <- TRUE                   # recommend when variances unequal
 glass_reference_group <- "A"              # SD reference for Glass’s Δ
 ```
 ---
+## 4) Methodology & Calculations
+- Assumption Checks
+    - Normality
+        - By default uses Shapiro–Wilk per group (n ≥ 3).
+        - Optionally Anderson–Darling (nortest, n ≥ 8 required).
+        - If method_normality = "none", normality tests are skipped and data are assumed acceptable.
+- Variance Homogeneity
+    - Levene’s test (median-centered, via car).
+    - If Levene’s p ≥ α → assume equal variances (Student’s t).
+    - If Levene’s p < α or car not available → Welch’s t.
+- Transformations
+    - Candidate transforms: log, √, inverse, Yeo–Johnson (if bestNormalize installed).
+    - Each transform is applied using a shared shift/epsilon/λ across both groups.
+    - For each transform, group-wise normality p values are computed.The transform with the highest minimum p-value that passes α for both groups is chosen.
+    - If no transform passes → fall back to Mann–Whitney U.
+- Test Selection
+    - Parametric (if assumptions satisfied or rescued):
+        - Student’s t if equal variances.
+        - Welch’s t otherwise.
+    - Nonparametric:
+        - Mann–Whitney U (Wilcoxon rank-sum).
+        - Uses exact test if n1*n2 ≤ 50 and no ties; else asymptotic with continuity correction.
+- Effect Sizes
+    - All computed on the final analysis scale (raw or transformed).
+    - Cohen’s d: mean difference ÷ pooled SD (computed even if Welch is chosen; note that it assumes homogeneity).
+    - Hedges’ g: bias-corrected version of d. Optional 95% CI via MBESS::ci.smd().
+    - Glass’s Δ: reported as two variants because no reference group is fixed:
+        - Δ₁ = (M₁ − M₂) ÷ SD₁
+        - Δ₂ = (M₁ − M₂) ÷ SD₂
+        - Classic usage defines Δ relative to a “control” group; you can adapt the code to force a single reference.
+    - Mann–Whitney U effect size: r = Z / √(n₁+n₂), where Z is derived from the U statistic.
 
+---
 ## 5) Outputs
 ```r
 Welch’s t-test showed that A (M = 72.10, SD = 5.02) differ from B (M = 75.30, SD = 15.20), t(43.7) = −1.98, p = .0531, 95% CI [−6.43, 0.04]. Cohen’s d (pooled) = −0.39; Hedges’ g = −0.38 (95% CI [−0.78, 0.01]); Welch’s d = −0.23; Glass’s Δ (ref A) = −0.64.
