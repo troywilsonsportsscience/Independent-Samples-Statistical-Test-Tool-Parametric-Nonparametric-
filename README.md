@@ -29,17 +29,29 @@ An all-in-one R script for automated independent-samples hypothesis testing with
 ## 1) Install
 ```r
 # R >= 4.1 recommended
-required_packages <- c("tidyverse", "car", "broom", "janitor", "rstatix")
+required_packages <- c("tidyverse", "broom", "janitor", "ggplot2")
 install.packages(setdiff(required_packages, rownames(installed.packages())))
 
-# Optional (for extra tests/intervals)
-install.packages(c("nortest", "MBESS", "effsize"))
+# Optional (extra functionality: AD test, Levene, Yeo–Johnson, effect-size CI)
+install.packages(c("nortest", "car", "bestNormalize", "MBESS"))
 
 # The script includes a helper to auto-install missing packages
 ```
 ---
+## 2) Data Input
+- Source:
+    - By default: file.choose() to import a CSV.
+    - Or supply your own tibble.
+- Required columns (first three columns are renamed automatically):
+    - subject_id (ID)
+    - group (factor with exactly two levels)
+    - test_metric (numeric outcome)
+- Cleaning:
+    - Columns renamed with janitor::clean_names().
+    - Non-finite and missing values dropped.
+- Minimum N: at least 3 observations per group; Anderson–Darling requires n ≥ 8.
 
-## 2) Example Data 
+## 2.1) Example Data 
 ### A) Classic t-test (normal & equal variances)
 ```r
 set.seed(101)
