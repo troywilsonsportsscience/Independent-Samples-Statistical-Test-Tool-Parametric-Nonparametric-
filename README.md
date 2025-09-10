@@ -152,16 +152,6 @@ glass_reference_group <- "A"              # SD reference for Glass’s Δ
 Welch’s t-test showed that A (M = 72.10, SD = 5.02) differ from B (M = 75.30, SD = 15.20), t(43.7) = −1.98, p = .0531, 95% CI [−6.43, 0.04]. Cohen’s d (pooled) = −0.39; Hedges’ g = −0.38 (95% CI [−0.78, 0.01]); Welch’s d = −0.23; Glass’s Δ (ref A) = −0.64.
 ```
 ---
-## 6) Methods & Rationale
-- Normality: per-group Shapiro–Wilk by default; method_normality = "ad" (Anderson–Darling) optional; or "none" to skip tests and rely on robustness/visuals.
-- Variance equality: Levene (median-centered; Brown–Forsythe) determines classic vs. Welch.
-- Transforms: log, sqrt, inv applied safely (shifts & epsilons recorded) to salvage parametric assumptions where appropriate.
-- Effect sizes:
-    - Unequal variances → prefer Welch’s d or Glass’s Δ over pooled‐SD d.
-    - Nonparametric → rank-biserial r and Cliff’s δ.
-- Direction/sign: Effect signs are locked to the first factor level (reference group) for consistency.
----
-
 ## License
 MIT License. Free for academic, research, and commercial use with attribution.
 
